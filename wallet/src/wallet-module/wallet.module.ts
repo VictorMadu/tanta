@@ -6,5 +6,6 @@ import { WalletService } from './wallet.service';
 @Module({
   imports: [DbManagerModule],
   providers: [WalletService, WalletRepository],
+  exports: [WalletService],
 })
 export class WalletModule {}

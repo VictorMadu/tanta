@@ -1,5 +1,5 @@
 import { Exception } from './exception';
-import { ExceptionCode } from './exception-code';
+import { LibCode } from './exception-code';
 
 export class Pagination {
   constructor(public readonly offset: number, public readonly limit: number) {
@@ -9,7 +9,7 @@ export class Pagination {
       !Number.isInteger(offset) ||
       !Number.isInteger(limit)
     ) {
-      throw new Exception(ExceptionCode.INVALID_PAGINATION);
+      throw new Exception(LibCode.INVALID_PAGINATION);
     }
   }
 }

@@ -1,3 +1,3 @@
-export enum ExceptionCode {
+export enum LibCode {
   INVALID_PAGINATION = 'LIB__INVALID_PAGINATION',
 }

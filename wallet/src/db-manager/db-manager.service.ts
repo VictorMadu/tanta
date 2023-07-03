@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import knex, { Knex } from 'knex';
-import config from '../../config';
+import config from '../config';
 
 @Injectable()
 export class DbManagerService {

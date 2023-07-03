@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { DbManagerService } from 'src/db-manager/db-manager.service';
 import { Exception } from 'src/lib/exception';
-import { ExceptionCode } from 'src/wallet-module/exception-code';
+import { WalletCode } from 'src/wallet-module/exception-code';
 import { Wallet } from 'src/wallet-module/wallet.entity';
 import { WalletModule } from 'src/wallet-module/wallet.module';
 import { WalletService } from 'src/wallet-module/wallet.service';
@@ -71,6 +71,6 @@ describe('Wallet Module => Creation', () => {
 
     //  ==================== ASSERT error3 ===============
     expect(error3).toBeInstanceOf(Exception);
-    expect(error3.code).toBe(ExceptionCode.NOT_FOUND);
+    expect(error3.code).toBe(WalletCode.NOT_FOUND);
   });
 });

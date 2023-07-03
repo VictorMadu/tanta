@@ -1,26 +1,26 @@
 import { Exception } from 'src/lib/exception';
 import { Currency } from './currency';
-import { ExceptionCode } from './exception-code';
+import { WalletCode } from './exception-code';
 
 export class Money {
   // value: is the no/amount of the smallest unit. Eg: $10, 1000 cents value
   constructor(private value: number, private currency: Currency) {
-    if (!Number.isInteger(value))
-      throw new Exception(ExceptionCode.INVALID_MONEY);
+    if (!Number.isInteger(value)) throw new Exception(WalletCode.INVALID_MONEY);
+    if (value < 0) throw new Exception(WalletCode.INVALID_MONEY);
   }
 
   add(other: Money) {
     if (other.currency !== this.currency)
-      throw new Exception(ExceptionCode.INCOMPATIABLE_CURRENCY);
+      throw new Exception(WalletCode.INCOMPATIABLE_CURRENCY);
 
     return new Money(this.value + other.value, this.currency);
   }
 
-  substract(other: Money) {
+  difference(other: Money) {
     if (other.currency !== this.currency)
-      throw new Exception(ExceptionCode.INCOMPATIABLE_CURRENCY);
+      throw new Exception(WalletCode.INCOMPATIABLE_CURRENCY);
 
-    return new Money(this.value - other.value, this.currency);
+    return new Money(Math.abs(this.value - other.value), this.currency);
   }
 
   multiply(by: number) {

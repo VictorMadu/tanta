@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { DbManagerService } from 'src/db-manager/db-manager.service';
 import { Exception } from 'src/lib/exception';
-import { ExceptionCode } from 'src/lib/exception-code';
+import { LibCode } from 'src/lib/exception-code';
 import { Pagination } from 'src/lib/pagination';
 import { Wallet } from 'src/wallet-module/wallet.entity';
 import { WalletModule } from 'src/wallet-module/wallet.module';
@@ -102,10 +102,10 @@ describe('Wallet Module => Creation', () => {
 
     //  ==================== ASSERT error4 ===============
     expect(error4).toBeInstanceOf(Exception);
-    expect(error4.code).toBe(ExceptionCode.INVALID_PAGINATION);
+    expect(error4.code).toBe(LibCode.INVALID_PAGINATION);
 
     //  ==================== ASSERT error4 ===============
     expect(error5).toBeInstanceOf(Exception);
-    expect(error5.code).toBe(ExceptionCode.INVALID_PAGINATION);
+    expect(error5.code).toBe(LibCode.INVALID_PAGINATION);
   });
 });

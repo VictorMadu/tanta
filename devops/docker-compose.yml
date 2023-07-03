@@ -1,0 +1,68 @@
+version: '3.9'
+services:
+
+  wallet_db:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    environment:
+      POSTGRES_USER: 'wallet'
+      POSTGRES_DB: 'wallet'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_PORT: 5432
+
+  # user_db:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.postgres
+  #   environment:
+  #     POSTGRES_USER: 'user'
+  #     POSTGRES_DB: 'user'
+  #     POSTGRES_PASSWORD: 'password'
+  #     POSTGRES_PORT: 5433
+
+  # notification_db:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.postgres
+  #   environment:
+  #     POSTGRES_USER: 'notification'
+  #     POSTGRES_DB: 'notification'
+  #     POSTGRES_PASSWORD: 'password'
+  #     POSTGRES_PORT: 5433
+
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: Dockerfile.rabbitmq
+    environment:
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE:-secret_cookie}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+
+  # drinks:
+  #   build:
+  #     context: ../django-tutorial
+  #     dockerfile: Dockerfile
+
+  wallet:
+    build:
+      context: ../wallet
+      dockerfile: Dockerfile
+    depends_on:
+      - wallet_db
+    environment:
+      PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: wallet
+      DB_PASSWORD: password
+      DB_MIN_POOLSIZE: 1
+      DB_MAX_POOLSIZE: 30
+      NODE_ENV: production
+      DB_NAME: wallet

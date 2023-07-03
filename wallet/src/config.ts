@@ -20,6 +20,10 @@ const config = {
     },
     timezone: 'UTC',
   },
+  rabbitMq: {
+    host: 'localhost',
+    port: 5672,
+  },
   port: process.env.PORT as string,
   env: process.env.NODE_ENV as 'test' | 'development' | 'production',
 } as const;

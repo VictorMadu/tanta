@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('userId');
     table.bigInteger('balanceValue');
     table.string('balanceCurrency');
+    table.boolean('balanceType');
     table.integer('lastTransactionVersion');
     table.timestamp('createdAt', { useTz: true });
     table.boolean('version');

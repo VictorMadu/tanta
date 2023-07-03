@@ -3,14 +3,17 @@ import { Money } from './money';
 import * as uuid from 'uuid';
 import { Currency } from './currency';
 import { TransactionControl } from 'src/lib/concurrency-control';
+import { BalanceType } from './balance-type';
+import * as _ from 'lodash';
 
 export class Wallet {
   constructor(
     private walletId: string,
     private userId: string,
-    private createdAt: DateTime,
     private balance: Money,
+    private balanceType: BalanceType,
     private lastTransactionVersion: number,
+    private createdAt: DateTime,
     private transactionControl: TransactionControl,
   ) {}
 
@@ -18,9 +21,10 @@ export class Wallet {
     return new Wallet(
       uuid.v4(),
       userId,
-      DateTime.now(),
       new Money(0, Currency.NGN),
+      BalanceType.IDEAL,
       0,
+      DateTime.now(),
       TransactionControl.init(),
     );
   }
@@ -37,6 +41,10 @@ export class Wallet {
     return this.createdAt;
   }
 
+  hasUpTo(amount: Money) {
+    return this.balance.greaterOrEqual(amount);
+  }
+
   getBalance(): Money {
     return this.balance;
   }
@@ -45,14 +53,23 @@ export class Wallet {
     return this.lastTransactionVersion;
   }
 
-  equals(other: Wallet): any {
-    return (
-      this.walletId === other.walletId &&
-      this.userId === other.userId &&
-      this.createdAt.equals(other.createdAt) &&
-      this.balance.equals(other.balance) &&
-      this.lastTransactionVersion === other.lastTransactionVersion
-    );
+  getBalanceType(): BalanceType {
+    return this.balanceType;
+  }
+
+  updateBalanceData(
+    balance: Money,
+    balanceType: BalanceType,
+    transactionVersion: number,
+  ) {
+    this.balance = balance;
+    this.balanceType = balanceType;
+    this.lastTransactionVersion = transactionVersion;
+    return this;
+  }
+
+  equals(other?: Wallet | null): any {
+    return _.isEqual(this.getState(), other?.getState());
   }
 
   getTransactionControl() {
@@ -64,13 +81,14 @@ export class Wallet {
     return this;
   }
 
-  static getState(wallet: Wallet) {
+  getState() {
     return {
-      walletId: wallet.walletId,
-      userId: wallet.userId,
-      createdAt: wallet.createdAt,
-      balance: wallet.balance,
-      lastTransactionVersion: wallet.lastTransactionVersion,
+      walletId: this.walletId,
+      userId: this.userId,
+      createdAt: this.createdAt,
+      balance: this.balance,
+      balanceType: this.balanceType,
+      lastTransactionVersion: this.lastTransactionVersion,
     };
   }
 }

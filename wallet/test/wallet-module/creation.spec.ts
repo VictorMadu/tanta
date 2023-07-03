@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { DbManagerService } from 'src/db-manager/db-manager.service';
 import { DateTime } from 'src/lib/date-time';
+import { BalanceType } from 'src/wallet-module/balance-type';
 import { Currency } from 'src/wallet-module/currency';
 import { Money } from 'src/wallet-module/money';
 import { Wallet } from 'src/wallet-module/wallet.entity';
@@ -37,13 +38,14 @@ describe('Wallet Module => Creation', () => {
     await module.close();
   });
 
-  test('Assertion', () => {
+  test('Assertions', () => {
     expect(wallet).toBeInstanceOf(Wallet);
     expect(wallet.getId()).toMatch(/\w+/);
     expect(wallet.getUserId()).toEqual(userId);
     expect(wallet.getCreationTime().greaterOrEqual(beforeAction)).toBe(true);
     expect(wallet.getCreationTime().lessOrEqual(afterAction)).toBe(true);
     expect(wallet.getBalance()).toEqual(new Money(0, Currency.NGN));
+    expect(wallet.getBalanceType()).toBe(BalanceType.IDEAL);
     expect(wallet.getLastTransactionVersion()).toBe(0);
   });
 });
