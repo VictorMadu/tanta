@@ -6,7 +6,7 @@ const envConfig: Knex.Config = {
   connection: config.knex.connection,
   migrations: {
     tableName: 'knex_migrations',
-    directory: './src/db-manager/migrations',
+    directory: './src/database/migrations',
   },
 };
 

@@ -1,5 +1,5 @@
 import { TestingModuleBuilder } from '@nestjs/testing';
-import { WalletService } from 'src/wallet-module/wallet.service';
+import { WalletService } from 'src/features/wallet/wallet.service';
 import { NotificationServiceStub } from './notification.service.stub';
 import { WalletServiceStub } from './wallet.service.stub';
 

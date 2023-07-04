@@ -1,18 +1,18 @@
 import { Test } from '@nestjs/testing';
-import { DbManagerService } from 'src/db-manager/db-manager.service';
+import { DatabaseService } from 'src/database/database.service';
 import { TransactionControl } from 'src/lib/concurrency-control';
 import { DateTime } from 'src/lib/date-time';
 import { Exception } from 'src/lib/exception';
-import { Transaction } from 'src/transaction-module/transaction.entity';
-import { Currency } from 'src/wallet-module/currency';
-import { WalletCode } from 'src/wallet-module/exception-code';
-import { Money } from 'src/wallet-module/money';
-import { Wallet } from 'src/wallet-module/wallet.entity';
-import { WalletModule } from 'src/wallet-module/wallet.module';
-import { WalletService } from 'src/wallet-module/wallet.service';
+import { Transaction } from 'src/features/transaction/transaction.entity';
+import { Currency } from 'src/features/wallet/currency';
+import { WalletCode } from 'src/features/wallet/exception-code';
+import { Money } from 'src/features/wallet/money';
+import { Wallet } from 'src/features/wallet/wallet.entity';
+import { WalletModule } from 'src/features/wallet/wallet.module';
+import { WalletService } from 'src/features/wallet/wallet.service';
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
-import { TransactionType } from 'src/transaction-module/transaction-type';
+import { TransactionType } from 'src/features/transaction/transaction-type';
 
 describe('Wallet Module => Creation', () => {
   const userId = uuid.v4();
@@ -27,7 +27,7 @@ describe('Wallet Module => Creation', () => {
     }).compile();
 
     const walletService = module.get(WalletService);
-    const dbManagerService = module.get(DbManagerService);
+    const dbManagerService = module.get(DatabaseService);
 
     // ================  SETUP  ====================
     wallet = await walletService.create({ userId });

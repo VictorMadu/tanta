@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Exception } from 'src/lib/exception';
 import { Pagination } from 'src/lib/pagination';
-import { TransactionType } from 'src/transaction-module/transaction-type';
-import { Transaction } from 'src/transaction-module/transaction.entity';
+import { TransactionType } from 'src/features/transaction/transaction-type';
+import { Transaction } from 'src/features/transaction/transaction.entity';
 import { BalanceType } from './balance-type';
 import { WalletCode } from './exception-code';
 import { Money } from './money';

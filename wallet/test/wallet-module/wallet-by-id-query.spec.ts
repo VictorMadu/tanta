@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
-import { DbManagerService } from 'src/db-manager/db-manager.service';
+import { DatabaseService } from 'src/database/database.service';
 import { Exception } from 'src/lib/exception';
-import { WalletCode } from 'src/wallet-module/exception-code';
-import { Wallet } from 'src/wallet-module/wallet.entity';
-import { WalletModule } from 'src/wallet-module/wallet.module';
-import { WalletService } from 'src/wallet-module/wallet.service';
+import { WalletCode } from 'src/features/wallet/exception-code';
+import { Wallet } from 'src/features/wallet/wallet.entity';
+import { WalletModule } from 'src/features/wallet/wallet.module';
+import { WalletService } from 'src/features/wallet/wallet.service';
 import * as uuid from 'uuid';
 
 describe('Wallet Module => Creation', () => {
@@ -26,7 +26,7 @@ describe('Wallet Module => Creation', () => {
     }).compile();
 
     const walletService = module.get(WalletService);
-    const dbManagerService = module.get(DbManagerService);
+    const dbManagerService = module.get(DatabaseService);
 
     // ================  SETUP  ====================
     wallet1 = await walletService.create({ userId });

@@ -1,6 +1,6 @@
 import { sleep } from 'src/lib/sleep';
-import { Transaction } from 'src/transaction-module/transaction.entity';
-import { Wallet } from 'src/wallet-module/wallet.entity';
+import { Transaction } from 'src/features/transaction/transaction.entity';
+import { Wallet } from 'src/features/wallet/wallet.entity';
 
 export class WalletServiceStub {
   private stubStoreManager = new WalletServiceStubSpyier();

@@ -1,6 +1,6 @@
 import { TransactionControl } from 'src/lib/concurrency-control';
 import { DateTime } from 'src/lib/date-time';
-import { Money } from 'src/wallet-module/money';
+import { Money } from 'src/features/wallet/money';
 import { TransactionType } from './transaction-type';
 import * as _ from 'lodash';
 

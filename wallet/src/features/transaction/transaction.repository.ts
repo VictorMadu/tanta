@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { DbManagerService } from 'src/db-manager/db-manager.service';
+import { DatabaseService } from 'src/database/database.service';
 import { TransactionControl } from 'src/lib/concurrency-control';
 import { DateTime } from 'src/lib/date-time';
 import { Exception } from 'src/lib/exception';
 import { Pagination } from 'src/lib/pagination';
-import { Currency } from 'src/wallet-module/currency';
-import { Money } from 'src/wallet-module/money';
+import { Currency } from 'src/features/wallet/currency';
+import { Money } from 'src/features/wallet/money';
 import { TransactionCode } from './exception-code';
 import { TransactionType } from './transaction-type';
 import { Transaction } from './transaction.entity';
@@ -24,7 +24,7 @@ const TableName = 'Transaction';
 
 @Injectable()
 export class TransactionRepository {
-  constructor(private dbManagerService: DbManagerService) {}
+  constructor(private dbManagerService: DatabaseService) {}
 
   async save(transaction: Transaction) {
     try {

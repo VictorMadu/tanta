@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DbManagerModule } from 'src/db-manager/db-manager.module';
-import { WalletModule } from 'src/wallet-module/wallet.module';
+import { DatabaseModule } from 'src/database/database.module';
+import { WalletModule } from 'src/features/wallet/wallet.module';
 import { TransactionRepository } from './transaction.repository';
 import { TransactionService } from './transaction.service';
 
 @Module({
-  imports: [DbManagerModule, WalletModule],
+  imports: [DatabaseModule, WalletModule],
   providers: [TransactionService, TransactionRepository],
 })
 export class TransactionModule {}

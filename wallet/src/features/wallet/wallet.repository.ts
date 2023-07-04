@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DbManagerService } from 'src/db-manager/db-manager.service';
+import { DatabaseService } from 'src/database/database.service';
 import { TransactionControl } from 'src/lib/concurrency-control';
 import { DateTime } from 'src/lib/date-time';
 import { Exception } from 'src/lib/exception';
@@ -25,7 +25,7 @@ const TableName = 'Wallet';
 
 @Injectable()
 export class WalletRepository {
-  constructor(private dbManagerService: DbManagerService) {}
+  constructor(private databaseService: DatabaseService) {}
 
   async save(wallet: Wallet) {
     try {
@@ -70,7 +70,7 @@ export class WalletRepository {
   }
 
   private getDb() {
-    return this.dbManagerService.database<Table>(TableName);
+    return this.databaseService.database<Table>(TableName);
   }
 
   private async insert(row: Table) {

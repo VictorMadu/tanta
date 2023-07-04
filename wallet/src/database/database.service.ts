@@ -3,8 +3,8 @@ import knex, { Knex } from 'knex';
 import config from '../config';
 
 @Injectable()
-export class DbManagerService {
-  public database: Knex;
+export class DatabaseService {
+  public readonly database: Knex;
 
   constructor() {
     this.database = knex(config.knex);

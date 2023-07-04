@@ -1,15 +1,15 @@
 import { Test } from '@nestjs/testing';
-import { DbManagerService } from 'src/db-manager/db-manager.service';
+import { DatabaseService } from 'src/database/database.service';
 import { Exception } from 'src/lib/exception';
-import { NotificationType } from 'src/notification-module/notification-type';
-import { TransactionCode } from 'src/transaction-module/exception-code';
-import { Transaction } from 'src/transaction-module/transaction.entity';
-import { TransactionModule } from 'src/transaction-module/transaction.module';
-import { TransactionService } from 'src/transaction-module/transaction.service';
-import { Currency } from 'src/wallet-module/currency';
-import { Money } from 'src/wallet-module/money';
-import { Wallet } from 'src/wallet-module/wallet.entity';
-import { WalletService } from 'src/wallet-module/wallet.service';
+import { NotificationType } from 'src/features/notification/notification-type';
+import { TransactionCode } from 'src/features/transaction/exception-code';
+import { Transaction } from 'src/features/transaction/transaction.entity';
+import { TransactionModule } from 'src/features/transaction/transaction.module';
+import { TransactionService } from 'src/features/transaction/transaction.service';
+import { Currency } from 'src/features/wallet/currency';
+import { Money } from 'src/features/wallet/money';
+import { Wallet } from 'src/features/wallet/wallet.entity';
+import { WalletService } from 'src/features/wallet/wallet.service';
 import * as uuid from 'uuid';
 
 describe('Transaction Module => Over debiting Wallet', () => {
@@ -31,7 +31,7 @@ describe('Transaction Module => Over debiting Wallet', () => {
 
     const transactionService = module.get(TransactionService);
     const walletService = module.get(WalletService);
-    const dbManagerService = module.get(DbManagerService);
+    const dbManagerService = module.get(DatabaseService);
 
     // ======================== SETUP ===========================
     wallet = await walletService.create({ userId });

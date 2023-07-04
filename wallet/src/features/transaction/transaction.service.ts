@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Exception } from 'src/lib/exception';
 import { Pagination } from 'src/lib/pagination';
-import { NotificationType } from 'src/notification-module/notification-type';
-import { Money } from 'src/wallet-module/money';
-import { Wallet } from 'src/wallet-module/wallet.entity';
-import { WalletService } from 'src/wallet-module/wallet.service';
+import { NotificationType } from 'src/features/notification/notification-type';
+import { Money } from 'src/features/wallet/money';
+import { Wallet } from 'src/features/wallet/wallet.entity';
+import { WalletService } from 'src/features/wallet/wallet.service';
 import { TransactionCode } from './exception-code';
 import { TransactionType } from './transaction-type';
 import { Transaction } from './transaction.entity';

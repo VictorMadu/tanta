@@ -1,4 +1,4 @@
-import { NotifyUser } from 'src/notification-module/notify-user';
+import { NotifyUser } from 'src/features/notification/notify-user';
 
 export class NotificationServiceStub {
   private stubStoreManager = new NotificationServiceStubSpyier();

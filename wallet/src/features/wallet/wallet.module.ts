@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DbManagerModule } from 'src/db-manager/db-manager.module';
+import { DatabaseModule } from 'src/database/database.module';
 import { WalletRepository } from './wallet.repository';
 import { WalletService } from './wallet.service';
 
 @Module({
-  imports: [DbManagerModule],
+  imports: [DatabaseModule],
   providers: [WalletService, WalletRepository],
   exports: [WalletService],
 })
