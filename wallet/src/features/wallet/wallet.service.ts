@@ -48,14 +48,9 @@ export class WalletService {
     let type: BalanceType;
     let version: number;
 
-    console.log('RRRRRRRRRRRR', transactions.length);
-
     for (let i = 0; i < transactions.length; i++) {
       transaction = transactions[i];
       version = transaction.getTransactionControl().getVersion();
-
-      console.log('\n\n\n\n\nWALLET', version);
-      console.log('\n\n\n\n\nWALLET TYPE', wallet.getLastTransactionVersion());
 
       if (wallet.getLastTransactionVersion() + 1 !== version) {
         throw new Exception(WalletCode.INVALID_TRANSACTIONS);
@@ -80,7 +75,7 @@ export class WalletService {
           balance = wallet.getBalance().difference(transaction.getAmount());
           type = BalanceType.OVERDRAFT;
         } else {
-          balance = wallet.getBalance().add(transaction.getAmount());
+          balance = wallet.getBalance().difference(transaction.getAmount());
           type = wallet.getBalanceType();
         }
       }

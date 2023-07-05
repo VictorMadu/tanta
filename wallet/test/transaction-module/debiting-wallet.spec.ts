@@ -37,7 +37,7 @@ describe('Transaction Module => Crediting Wallet', () => {
       await transactionService.credit({
         walletId: wallet.getId(),
         amount: balanceAmount1,
-        senderTransactionId: uuid.v4(),
+        transactionId: uuid.v4(),
       });
       console.log(
         'ERRRROR11',
@@ -48,7 +48,7 @@ describe('Transaction Module => Crediting Wallet', () => {
       transaction1 = await transactionService.debit({
         walletId: wallet.getId(),
         amount: debitAmount1,
-        senderTransactionId: uuid.v4(),
+        transactionId: uuid.v4(),
         notificationType: NotificationType.EMAIL,
       });
       wallet1 = await walletService.getWalletById({ walletId: wallet.getId() });

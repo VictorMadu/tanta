@@ -49,6 +49,13 @@ export class Wallet {
     return this.balance;
   }
 
+  getBalanceAsNum(): number {
+    return (
+      this.balance.getValue() *
+      (this.balanceType === BalanceType.IDEAL ? 1 : -1)
+    );
+  }
+
   getLastTransactionVersion(): number {
     return this.lastTransactionVersion;
   }

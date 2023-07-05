@@ -39,7 +39,7 @@ describe('Transaction Module => Over debiting Wallet', () => {
     transaction = await transactionService.credit({
       walletId: wallet.getId(),
       amount: balanceAmount,
-      senderTransactionId: uuid.v4(),
+      transactionId: uuid.v4(),
     });
 
     //  ========================== TEST  =====================
@@ -48,7 +48,7 @@ describe('Transaction Module => Over debiting Wallet', () => {
         walletId: wallet.getId(),
         amount: debitAmount,
         notificationType: NotificationType.EMAIL,
-        senderTransactionId: uuid.v4(),
+        transactionId: uuid.v4(),
       });
     } catch (e) {
       error = e;

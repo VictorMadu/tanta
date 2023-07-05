@@ -18,21 +18,21 @@ export class Transaction {
     lastTransaction,
     walletId,
     amount,
-    senderTransactionId,
+    transactionId,
     type,
   }: {
     lastTransaction: Transaction | null;
     walletId: string;
     amount: Money;
     type: TransactionType;
-    senderTransactionId: string;
+    transactionId: string;
   }) {
     const transactionControl =
       lastTransaction?.getTransactionControl().clone() ??
       TransactionControl.init();
 
     return new Transaction(
-      senderTransactionId,
+      transactionId,
       walletId,
       amount,
       type,
@@ -50,12 +50,20 @@ export class Transaction {
     return this;
   }
 
+  getId() {
+    return this.transactionId;
+  }
+
   getType() {
     return this.type;
   }
 
   getAmount(): Money {
     return this.amount;
+  }
+
+  getCreationTime() {
+    return this.createdAt;
   }
 
   getWalletId(): string {

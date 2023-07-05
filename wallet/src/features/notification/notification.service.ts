@@ -9,7 +9,8 @@ export class NotificationService {
     message,
     notificationType,
   }: NotifyUser): Promise<void> {
-    throw new Error();
+    console.log({ userId, message, notificationType });
+    return;
     // TODO: Use Kafka or RabbitMQ to communicate
   }
 }

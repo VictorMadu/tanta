@@ -1,4 +1,4 @@
 export enum NotificationType {
-  EMAIL,
-  MOBILE,
+  EMAIL = 'EMAIL',
+  MOBILE = 'MOBILE',
 }

@@ -17,11 +17,14 @@ export class ValidationException extends BadRequestException {
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
+    console.log('Hee');
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
     const object = plainToInstance(metatype, value);
     const errors = await validate(object);
+
+    console.log('errors', errors);
 
     if (hasError(errors)) {
       throw new ValidationException(getFirstError(errors));

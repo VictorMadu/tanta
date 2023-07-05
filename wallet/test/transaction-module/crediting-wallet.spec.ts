@@ -36,7 +36,7 @@ describe('Transaction Module => Crediting Wallet', () => {
       transaction1 = await transactionService.credit({
         walletId: wallet.getId(),
         amount,
-        senderTransactionId: uuid.v4(),
+        transactionId: uuid.v4(),
       });
       wallet1 = await walletService.getWalletById({ walletId: wallet.getId() });
     } catch (error) {

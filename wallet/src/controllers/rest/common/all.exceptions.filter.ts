@@ -20,6 +20,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       error: string | null;
     };
 
+    console.log('exception', exception);
+
     if (exception instanceof ValidationException) {
       httpStatus = exception.getStatus();
       responseBody = {

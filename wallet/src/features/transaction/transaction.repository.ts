@@ -60,17 +60,23 @@ export class TransactionRepository {
     return rows.map((row) => this.toEntity(row));
   }
 
+  async getTransactionIfExists({
+    transactionId,
+  }: {
+    transactionId: string;
+  }): Promise<Transaction | null> {
+    const row = await this.getDb().where({ transactionId }).first();
+
+    if (row == null) return null;
+    else return this.toEntity(row);
+  }
+
   private getDb() {
     return this.dbManagerService.database<Table>(TableName);
   }
 
   private async insert(row: Table) {
     await this.getDb().insert(row);
-  }
-
-  private async update(row: Table) {
-    const { walletId } = row;
-    await this.getDb().where({ walletId }).update(row);
   }
 
   private toRow(

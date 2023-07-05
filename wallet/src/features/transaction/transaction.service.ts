@@ -9,20 +9,22 @@ import { TransactionCode } from './exception-code';
 import { TransactionType } from './transaction-type';
 import { Transaction } from './transaction.entity';
 import { TransactionRepository } from './transaction.repository';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class TransactionService {
   constructor(
     private transactionRepository: TransactionRepository,
     private walletService: WalletService,
+    private notificationService: NotificationService,
   ) {}
 
   async credit({
-    senderTransactionId,
+    transactionId,
     walletId,
     amount,
   }: {
-    senderTransactionId: string;
+    transactionId: string;
     walletId: string;
     amount: Money;
   }): Promise<Transaction> {
@@ -35,7 +37,7 @@ export class TransactionService {
       walletId,
       amount,
       type: TransactionType.IN,
-      senderTransactionId,
+      transactionId,
     });
     console.log(
       'BEFORE_SAVE',
@@ -54,20 +56,21 @@ export class TransactionService {
     walletId,
     amount,
     notificationType,
-    senderTransactionId,
+    transactionId,
   }: {
     walletId: string;
     amount: Money;
     notificationType: NotificationType;
-    senderTransactionId: string;
+    transactionId: string;
   }): Promise<Transaction> {
     const wallet = await this.walletService.getWalletById({ walletId });
 
-    console.log('wallet.hasUpTo(amount)', wallet.hasUpTo(amount));
-    console.log('wallet.getBalance()', wallet.getBalance());
-    console.log('amount', amount);
-
     if (!wallet.hasUpTo(amount)) {
+      this.notificationService.notifyUser({
+        userId: wallet.getUserId(),
+        message: `Your transaction was not successful due to insufficient fund.`,
+        notificationType,
+      });
       throw new Exception(TransactionCode.INSUFFICIENT_FUND);
     }
 
@@ -80,7 +83,7 @@ export class TransactionService {
       walletId,
       amount,
       type: TransactionType.OUT,
-      senderTransactionId,
+      transactionId,
     });
 
     await this.transactionRepository.save(transaction);
@@ -90,11 +93,17 @@ export class TransactionService {
     return transaction;
   }
 
-  private async updateWallet({ wallet }: { wallet: Wallet }) {
-    const version = wallet.getLastTransactionVersion();
+  getTransactionIfExists({
+    transactionId,
+  }: {
+    transactionId: string;
+  }): Promise<Transaction | null> {
+    return this.transactionRepository.getTransactionIfExists({ transactionId });
+  }
 
+  private async updateWallet({ wallet }: { wallet: Wallet }) {
     const transactions = await this.transactionRepository.getAllInAscOrderAfter(
-      { version },
+      { version: wallet.getLastTransactionVersion() },
     );
 
     console.log('transactions', transactions);
