@@ -18,4 +18,4 @@ RUN ls -lah .
 
 RUN yarn build
 
-CMD yarn mr-u && yarn start
+CMD yarn mr-u && yarn start:dev

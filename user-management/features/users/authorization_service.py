@@ -1,22 +1,25 @@
 from typing import Dict
 from messaging.messaging_service import MessagingService
-
+from django.conf import settings
 
 class AuthorizationService:
 
     def __init__(self, messaging_service: MessagingService) -> None:
         self.messaging_service = messaging_service
+        self.binding_key = settings.RABBITMQ_AUTHORIZATION_BINDING_KEY
 
     def on_ready(self):
 
         self.messaging_service.set_handler_for_route(
-            routing_key='notification_service_notify',
-            callback=self.messaging_service.createCallbackWithNoResponse(
-                lambda p: self.notify(p))
+            routing_key=self.binding_key,
+            callback=self.messaging_service.createCallbackWithResponseToPublisher(
+                lambda p: self.authorize(p))
         )
 
     def authorize(self, payload: Dict[str, str]) -> Dict:
         out = {}
+        
+        print("AUth Receive")
 
         token = payload.get('token')
         user_pk = self.get_user_pk(token)
@@ -66,5 +69,3 @@ class AuthorizationService:
             return userData
         except (Exception):
             return None
-
-

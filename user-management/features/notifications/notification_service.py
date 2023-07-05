@@ -28,10 +28,11 @@ class NotificationService:
         self.twilio_acc_sid = settings.TWILIO_ACCOUNT_SID
         self.twilio_auth_token = settings.TWILIO_AUTH_TOKEN
         self.twilio_sender_phone = settings.TWILIO_PHONE_NUMBER
+        self.binding_key = settings.RABBITMQ_NOTIFICATION_BINDING_KEY
 
     def on_ready(self):
         self.messaging_service.set_handler_for_route(
-            routing_key='notification_service_notify',
+            routing_key=self.binding_key,
             callback=self.messaging_service.createCallbackWithNoResponse(
                 lambda p: self.notify(p))
         )

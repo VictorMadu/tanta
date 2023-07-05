@@ -1,7 +1,7 @@
 from django.urls import path, include
 from features.users.views import UserRegistrationView, user_details
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from .services import *
 
 urlpatterns = [
    path('api/auth/register', UserRegistrationView.as_view(), name='register'),

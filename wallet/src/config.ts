@@ -23,6 +23,11 @@ const config = {
   rabbitMq: {
     host: 'localhost',
     port: 5672,
+    exchangeName: 'tanta_exchange',
+    routingKey: {
+      notification: 'RABBITMQ_NOTIFICATION_BINDING_KEY',
+      authorization: 'RABBITMQ_AUTHORIZATION_BINDING_KEY',
+    },
   },
   port: process.env.PORT as string,
   env: process.env.NODE_ENV as 'test' | 'development' | 'production',

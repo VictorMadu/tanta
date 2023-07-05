@@ -16,12 +16,11 @@ class MessagingService:
         self.host = settings.RABBITMQ_HOST
         self.port = settings.RABBITMQ_PORT
         self.exchange = settings.RABBITMQ_EXCHANGE
-        self.queue_name = settings.RABBITMQ_QUEUE_NAME
 
     def set_handler_for_route(self, routing_key: RoutingKey, callback: Callback) -> None:
         self.handlers.append([routing_key, callback])
 
-    def start(self) -> None:
+    def on_ready(self) -> None:
         params = pika.ConnectionParameters(host=self.host, port=self.port)
 
         self.connection = pika.BlockingConnection(params)
@@ -34,7 +33,7 @@ class MessagingService:
             )
 
             result = self.channel.queue_declare(
-                queue=queue_name,
+                queue='',
                 exclusive=True
             )
 
