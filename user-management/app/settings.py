@@ -31,8 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
-    'notifications',
+    'messaging',
+    'features.users',
+    'features.notifications',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -150,12 +151,16 @@ DATABASES = {
 #     }
 # }
 
+RABBITMQ_HOST = 'localhost'
+RABBITMQ_PORT = 5672
+RABBITMQ_EXCHANGE = 'tanta_exchange'
+RABBITMQ_QUEUE_NAME = 'user_management_queue'
 
 EMAIL_SENDER = ''
 EMAIL_HOST = ''
 EMAIL_PORT = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_USER = ''
+EMAIL_PASSWORD = ''
 TWILIO_ACCOUNT_SID = ''
 TWILIO_AUTH_TOKEN = ''
 TWILIO_PHONE_NUMBER = ''
